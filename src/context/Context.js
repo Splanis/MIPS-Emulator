@@ -5,7 +5,8 @@ export const Context = createContext({});
 
 const initialState = {
     editor: "",
-    theme: "monokai"
+    theme: "monokai",
+    openFile: null,
 };
 
 export const ContextProvider = ({ children }) => {
