@@ -26,8 +26,6 @@ const StyledApp = styled.div`
         "navigation navigation"
         "editor sidebar"
         "terminal sidebar";
-    /* display: flex;
-    flex-direction: column; */
 `;
 
 export default App;
