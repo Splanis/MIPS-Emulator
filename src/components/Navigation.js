@@ -118,8 +118,6 @@ const Navigation = () => {
                     </option>
                 ))}
             </SelectTheme>
-
-            {state.openFile && <div>Open File: {state.openFile}</div>}
         </StyledNavigation>
     );
 };
