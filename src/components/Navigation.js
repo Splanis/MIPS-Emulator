@@ -5,8 +5,6 @@ import * as actions from "../context/actionTypes";
 import { StyledButton } from "../components/shared/Button";
 import styled from "styled-components";
 
-const themes = ["material", "monokai"];
-
 const Navigation = () => {
     const [state, dispatch] = useContext(Context);
     const [downloading, setDownloading] = useState(false);
@@ -48,10 +46,6 @@ const Navigation = () => {
     const closeFile = () => {
         dispatch({ type: actions.CLOSE_FILE });
         setFilesDropDown(false);
-    };
-
-    const handleThemeChange = (e) => {
-        dispatch({ type: actions.CHANGE_THEME, payload: e.target.value });
     };
 
     return (
@@ -110,14 +104,6 @@ const Navigation = () => {
             <StyledButton>Run</StyledButton>
 
             <StyledButton>Step Forward</StyledButton>
-
-            <SelectTheme onChange={handleThemeChange} value={state.editorSettings.theme}>
-                {themes.map((theme) => (
-                    <option key={theme} value={theme}>
-                        {theme}
-                    </option>
-                ))}
-            </SelectTheme>
         </StyledNavigation>
     );
 };
@@ -167,28 +153,6 @@ const StyledInput = styled.input`
 
 const DownloadButton = styled.button`
     position: absolute;
-`;
-
-const SelectTheme = styled.select`
-    width: 130px;
-    margin: 5px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    height: 35px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background: #c0c0c0;
-
-    &:active,
-    &:hover {
-        outline: none;
-    }
-
-    &:active,
-    &:hover {
-        outline-color: red;
-    }
 `;
 
 const Dropdown = styled.div`

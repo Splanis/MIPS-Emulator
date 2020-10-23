@@ -7,6 +7,8 @@ import styled from "styled-components";
 import { Context } from "../context/Context";
 import * as actions from "../context/actionTypes";
 
+const themes = ["material", "monokai"];
+
 const Editor = () => {
     const [state, dispatch] = useContext(Context);
 
@@ -14,25 +16,32 @@ const Editor = () => {
         dispatch({ type: actions.SET_EDITOR, payload: value });
     };
 
+    const handleThemeChange = (e) => {
+        dispatch({ type: actions.CHANGE_THEME, payload: e.target.value });
+    };
+
+    const handleFontSizeDecrement = () => {
+        dispatch({ type: actions.DECREMENT_FONT_SIZE });
+    };
+
+    const handleFontSizeIncrement = () => {
+        dispatch({ type: actions.INCREMENT_FONT_SIZE });
+    };
+
     return (
         <StyledEditor>
             <StyledEditorSettings>
                 {state.openFile && <div>Open File: {state.openFile}</div>}
-                <FontSizeChangeButton
-                    onClick={() => {
-                        dispatch({ type: actions.DECREMENT_FONT_SIZE });
-                    }}
-                >
-                    -
-                </FontSizeChangeButton>
+                <FontSizeChangeButton onClick={handleFontSizeDecrement}>-</FontSizeChangeButton>
                 {state.editorSettings.fontSize}
-                <FontSizeChangeButton
-                    onClick={() => {
-                        dispatch({ type: actions.INCREMENT_FONT_SIZE });
-                    }}
-                >
-                    +
-                </FontSizeChangeButton>
+                <FontSizeChangeButton onClick={handleFontSizeIncrement}>+</FontSizeChangeButton>
+                <SelectTheme onChange={handleThemeChange} value={state.editorSettings.theme}>
+                    {themes.map((theme) => (
+                        <option key={theme} value={theme}>
+                            {theme}
+                        </option>
+                    ))}
+                </SelectTheme>
             </StyledEditorSettings>
             <StyledControlledEditor
                 fontSize={state.editorSettings.fontSize + "px"}
@@ -84,6 +93,29 @@ const FontSizeChangeButton = styled.div`
 
     &:hover {
         cursor: pointer;
+    }
+`;
+
+const SelectTheme = styled.select`
+    width: 130px;
+    margin: 5px;
+    font-size: 16px;
+    height: 35px;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #383838;
+    color: white;
+
+    &:active,
+    &:hover {
+        outline: none;
+    }
+
+    &:active,
+    &:hover {
+        outline-color: red;
     }
 `;
 
