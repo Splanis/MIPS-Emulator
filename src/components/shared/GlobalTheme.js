@@ -16,7 +16,6 @@ const GlobalTheme = createGlobalStyle`
         color: white;
         font-family: 'Noto Sans JP', sans-serif;
     }
-   
 `;
 
 export default GlobalTheme;
