@@ -16,6 +16,7 @@ const GlobalTheme = createGlobalStyle`
         color: white;
         font-family: 'Noto Sans JP', sans-serif;
     }
+    .CodeMirror { min-height: 100% }
 `;
 
 export default GlobalTheme;
