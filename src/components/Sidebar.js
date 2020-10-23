@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 import styled from "styled-components";
-import { registers } from "./register";
+import { registers } from "../utils/register";
 import { Context } from "../context/Context";
 import * as actions from "../context/actionTypes";
 
