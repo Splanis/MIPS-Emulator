@@ -111,7 +111,7 @@ const Navigation = () => {
 
             <StyledButton>Step Forward</StyledButton>
 
-            <SelectTheme onChange={handleThemeChange} value={state.theme}>
+            <SelectTheme onChange={handleThemeChange} value={state.editorSettings.theme}>
                 {themes.map((theme) => (
                     <option key={theme} value={theme}>
                         {theme}

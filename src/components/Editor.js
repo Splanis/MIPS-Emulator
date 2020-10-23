@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Controlled as ControlledEditor } from "react-codemirror2";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/monokai.css";
@@ -9,6 +9,7 @@ import * as actions from "../context/actionTypes";
 
 const Editor = () => {
     const [state, dispatch] = useContext(Context);
+    const [fontSize, setFontSize] = useState(16);
 
     const handleChange = (editor, data, value) => {
         dispatch({ type: actions.SET_EDITOR, payload: value });
@@ -18,6 +19,7 @@ const Editor = () => {
         <StyledEditor>
             <StyledEditorSettings>
                 {state.openFile && <div>Open File: {state.openFile}</div>}
+
             </StyledEditorSettings>
             <StyledControlledEditor
                 onBeforeChange={handleChange}
@@ -27,7 +29,7 @@ const Editor = () => {
                     lint: true,
                     mode: "",
                     lineNumbers: true,
-                    theme: state.theme,
+                    theme: state.editorSettings.theme,
                 }}
             />
         </StyledEditor>

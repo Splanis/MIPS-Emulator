@@ -9,7 +9,7 @@ export const reducer = (state, { type, payload }) => {
         case actions.CLOSE_FILE:
             return { ...state, editor: "", openFile: null };
         case actions.CHANGE_THEME:
-            return { ...state, theme: payload };
+            return { ...state, editorSettings: { ...state.editorSettings, theme: payload } };
         default:
             return state;
     }
