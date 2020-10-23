@@ -1,6 +1,6 @@
-export const OPEN_FILE = "OPEN_FILE";
-export const SET_EDITOR = "SET_EDITOR";
-export const CHANGE_THEME = "CHANGE_THEME";
-export const CLOSE_FILE = "CLOSE_FILE";
-export const CHANGE_FONT_SIZE = "CHANGE_FONT_SIZE";
-export const CHANGE_NUMERAL_SYSTEM = "CHANGE_NUMERAL_SYSTEM";
+export const OPEN_FILE = 0;
+export const SET_EDITOR = 1;
+export const CHANGE_THEME = 2;
+export const CLOSE_FILE = 3;
+export const CHANGE_FONT_SIZE = 4;
+export const CHANGE_NUMERAL_SYSTEM = 5;
