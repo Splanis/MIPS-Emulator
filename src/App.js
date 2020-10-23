@@ -20,7 +20,7 @@ function App() {
 const StyledApp = styled.div`
     height: 100vh;
     display: grid;
-    grid-template-columns: 5fr 1fr;
+    grid-template-columns: 3fr 1fr;
     grid-template-rows: 1fr 15fr 4fr;
     grid-template-areas:
         "navigation navigation"
