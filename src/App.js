@@ -10,22 +10,33 @@ function App() {
     return (
         <StyledApp>
             <Navigation />
-            <Editor />
-            <Sidebar />
-            <Terminal />
+            <Column>
+                <Row>
+                    <Editor />
+                    <Terminal />
+                </Row>
+                <Sidebar />
+            </Column>
         </StyledApp>
     );
 }
 
 const StyledApp = styled.div`
     height: 100vh;
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    grid-template-rows: 1fr 15fr 4fr;
-    grid-template-areas:
-        "navigation navigation"
-        "editor sidebar"
-        "terminal sidebar";
+    display: flex;
+    flex-direction: column;
+`;
+
+const Column = styled.div`
+    display: flex;
+    height: 100%;
+`;
+
+const Row = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 6;
 `;
 
 export default App;

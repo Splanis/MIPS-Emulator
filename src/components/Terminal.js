@@ -7,9 +7,9 @@ const Terminal = () => {
 };
 
 const StyledTerminal = styled.div`
-    grid-area: terminal;
     background: #161616;
     margin: 35px 0 0 0;
+    flex: 1;
 `;
 
 export default Terminal;

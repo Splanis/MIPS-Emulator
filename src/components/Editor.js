@@ -35,7 +35,7 @@ const Editor = () => {
 };
 
 const StyledEditor = styled.div`
-    grid-area: editor;
+    flex: 3;
 `;
 
 const StyledControlledEditor = styled(ControlledEditor)`

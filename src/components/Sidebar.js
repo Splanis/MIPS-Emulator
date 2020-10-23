@@ -23,7 +23,7 @@ const Sidebar = () => {
     };
 
     return (
-        <StyledSidebar>
+        <StyledSidebar visible={state.sidebar.visible}>
             <FlexDiv>Name</FlexDiv>
             <FlexDiv>Number</FlexDiv>
             <FlexDiv>
@@ -50,10 +50,10 @@ const Sidebar = () => {
 };
 
 const StyledSidebar = styled.div`
-    grid-area: sidebar;
     background: #565656;
-    display: grid;
+    display: ${(props) => (props.visible ? "grid" : "none")};
     grid-template-columns: 1fr 1fr 1fr;
+    flex: 2;
 `;
 
 const FlexDiv = styled.div`
