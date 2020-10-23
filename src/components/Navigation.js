@@ -48,6 +48,10 @@ const Navigation = () => {
         setFilesDropDown(false);
     };
 
+    const toggleSidebar = () => {
+        dispatch({ type: actions.TOGGLE_SIDE_BAR });
+    };
+
     return (
         <StyledNavigation>
             <Dropdown>
@@ -104,12 +108,15 @@ const Navigation = () => {
             <StyledButton>Run</StyledButton>
 
             <StyledButton>Step Forward</StyledButton>
+
+            <StyledButton onClick={toggleSidebar} style={{ marginLeft: "auto", width: 32 }}>
+                {state.sidebar.visible ? "X" : "^"}
+            </StyledButton>
         </StyledNavigation>
     );
 };
 
 const StyledNavigation = styled.div`
-    grid-area: navigation;
     width: 100%;
     background: black;
     height: 50px;

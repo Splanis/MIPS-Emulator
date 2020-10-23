@@ -26,6 +26,14 @@ export const reducer = (state, { type, payload }) => {
                     numeralSystem: payload,
                 },
             };
+        case actions.TOGGLE_SIDE_BAR:
+            return {
+                ...state,
+                sidebar: {
+                    ...state.sidebar,
+                    visible: !state.sidebar.visible,
+                },
+            };
         default:
             return state;
     }
