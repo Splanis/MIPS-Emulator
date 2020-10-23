@@ -20,7 +20,11 @@ const EditorSettings = () => {
 
     return (
         <StyledEditorSettings>
-            <SelectBox onChange={handleFontSizeChange} value={state.editorSettings.fontSize}>
+            <SelectBox
+                style={{ width: 30 }}
+                onChange={handleFontSizeChange}
+                value={state.editorSettings.fontSize}
+            >
                 {fontSizes.map((fontSize) => (
                     <option key={fontSize} value={fontSize}>
                         {fontSize}
@@ -48,16 +52,18 @@ const StyledEditorSettings = styled.div`
 `;
 
 const SelectBox = styled.select`
-    width: 110px;
-    margin: 5px;
-    font-size: 16px;
-    height: 26px;
-    border: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background: #383838;
+    outline: none;
+    width: 100%;
+    min-width: 5ch;
+    max-width: 10ch;
+    border: 1px solid #777;
+    border-radius: 0.25em;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #363636;
     color: white;
+    margin: 5px;
+    height: 25px;
 
     &:active,
     &:hover {
@@ -67,6 +73,10 @@ const SelectBox = styled.select`
     &:active,
     &:hover {
         outline-color: red;
+    }
+
+    &::-ms-expand {
+        display: none;
     }
 `;
 
