@@ -5,6 +5,7 @@ import { Context } from "../context/Context";
 import * as actions from "../context/actionTypes";
 
 const themes = ["material", "monokai"];
+const fontSizes = [8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 30, 36, 48, 60, 72, 96];
 
 const EditorSettings = () => {
     const [state, dispatch] = useContext(Context);
@@ -13,27 +14,27 @@ const EditorSettings = () => {
         dispatch({ type: actions.CHANGE_THEME, payload: e.target.value });
     };
 
-    const handleFontSizeDecrement = () => {
-        dispatch({ type: actions.DECREMENT_FONT_SIZE });
-    };
-
-    const handleFontSizeIncrement = () => {
-        dispatch({ type: actions.INCREMENT_FONT_SIZE });
+    const handleFontSizeChange = (e) => {
+        dispatch({ type: actions.CHANGE_FONT_SIZE, payload: e.target.value });
     };
 
     return (
         <StyledEditorSettings>
-            {state.openFile && <div>Open File: {state.openFile}</div>}
-            <FontSizeChangeButton onClick={handleFontSizeDecrement}>-</FontSizeChangeButton>
-            {state.editorSettings.fontSize}
-            <FontSizeChangeButton onClick={handleFontSizeIncrement}>+</FontSizeChangeButton>
-            <SelectTheme onChange={handleThemeChange} value={state.editorSettings.theme}>
+            <SelectBox onChange={handleFontSizeChange} value={state.editorSettings.fontSize}>
+                {fontSizes.map((fontSize) => (
+                    <option key={fontSize} value={fontSize}>
+                        {fontSize}
+                    </option>
+                ))}
+            </SelectBox>
+
+            <SelectBox onChange={handleThemeChange} value={state.editorSettings.theme}>
                 {themes.map((theme) => (
                     <option key={theme} value={theme}>
                         {theme}
                     </option>
                 ))}
-            </SelectTheme>
+            </SelectBox>
         </StyledEditorSettings>
     );
 };
@@ -46,18 +47,7 @@ const StyledEditorSettings = styled.div`
     padding-left: 10px;
 `;
 
-const FontSizeChangeButton = styled.div`
-    border: none;
-    background: transparent;
-    margin: 5px;
-    font-size: 25px;
-
-    &:hover {
-        cursor: pointer;
-    }
-`;
-
-const SelectTheme = styled.select`
+const SelectBox = styled.select`
     width: 110px;
     margin: 5px;
     font-size: 16px;

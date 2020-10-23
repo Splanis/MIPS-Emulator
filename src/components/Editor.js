@@ -41,6 +41,7 @@ const StyledEditor = styled.div`
 const StyledControlledEditor = styled(ControlledEditor)`
     height: 100%;
     font-size: ${(props) => props.fontSize};
+    line-height: ${(props) => props.fontSize};
 
     .CodeMirror {
         min-height: 100%;

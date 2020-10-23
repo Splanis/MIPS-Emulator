@@ -10,20 +10,12 @@ export const reducer = (state, { type, payload }) => {
             return { ...state, editor: "", openFile: null };
         case actions.CHANGE_THEME:
             return { ...state, editorSettings: { ...state.editorSettings, theme: payload } };
-        case actions.DECREMENT_FONT_SIZE:
+        case actions.CHANGE_FONT_SIZE:
             return {
                 ...state,
                 editorSettings: {
                     ...state.editorSettings,
-                    fontSize: parseInt(state.editorSettings.fontSize) - 1,
-                },
-            };
-        case actions.INCREMENT_FONT_SIZE:
-            return {
-                ...state,
-                editorSettings: {
-                    ...state.editorSettings,
-                    fontSize: parseInt(state.editorSettings.fontSize) + 1,
+                    fontSize: payload,
                 },
             };
         default:
