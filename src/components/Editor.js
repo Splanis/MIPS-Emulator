@@ -9,9 +9,8 @@ import * as actions from "../context/actionTypes";
 
 const Editor = () => {
     const [state, dispatch] = useContext(Context);
-    const [fontSize, setFontSize] = useState(16);
 
-    const handleChange = (editor, data, value) => {
+    const handleEditorChange = (editor, data, value) => {
         dispatch({ type: actions.SET_EDITOR, payload: value });
     };
 
@@ -19,10 +18,25 @@ const Editor = () => {
         <StyledEditor>
             <StyledEditorSettings>
                 {state.openFile && <div>Open File: {state.openFile}</div>}
-
+                <FontSizeChangeButton
+                    onClick={() => {
+                        dispatch({ type: actions.DECREMENT_FONT_SIZE });
+                    }}
+                >
+                    -
+                </FontSizeChangeButton>
+                {state.editorSettings.fontSize}
+                <FontSizeChangeButton
+                    onClick={() => {
+                        dispatch({ type: actions.INCREMENT_FONT_SIZE });
+                    }}
+                >
+                    +
+                </FontSizeChangeButton>
             </StyledEditorSettings>
             <StyledControlledEditor
-                onBeforeChange={handleChange}
+                fontSize={state.editorSettings.fontSize + "px"}
+                onBeforeChange={handleEditorChange}
                 value={state.editor}
                 options={{
                     lineWrapping: true,
@@ -50,6 +64,7 @@ const StyledEditorSettings = styled.div`
 
 const StyledControlledEditor = styled(ControlledEditor)`
     height: 100%;
+    font-size: ${(props) => props.fontSize};
 
     .CodeMirror {
         min-height: 100%;
@@ -58,6 +73,17 @@ const StyledControlledEditor = styled(ControlledEditor)`
     .CodeMirror-scroll {
         margin: 0;
         padding: 0;
+    }
+`;
+
+const FontSizeChangeButton = styled.div`
+    border: none;
+    background: transparent;
+    margin: 5px;
+    font-size: 25px;
+
+    &:hover {
+        cursor: pointer;
     }
 `;
 
