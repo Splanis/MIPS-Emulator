@@ -7,6 +7,7 @@ const initialState = {
     editor: "",
     openFile: null,
     editorSettings: { fontSize: 16, theme: "monokai" },
+    sidebar: { numeralSystem: 16 },
 };
 
 export const ContextProvider = ({ children }) => {

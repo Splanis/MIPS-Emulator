@@ -18,6 +18,14 @@ export const reducer = (state, { type, payload }) => {
                     fontSize: payload,
                 },
             };
+        case actions.CHANGE_NUMERAL_SYSTEM:
+            return {
+                ...state,
+                sidebar: {
+                    ...state.sidebar,
+                    numeralSystem: payload,
+                },
+            };
         default:
             return state;
     }
