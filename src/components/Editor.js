@@ -7,8 +7,6 @@ import styled from "styled-components";
 import { Context } from "../context/Context";
 import * as actions from "../context/actionTypes";
 
-
-
 const Editor = () => {
     const [state, dispatch] = useContext(Context);
 
@@ -25,7 +23,7 @@ const Editor = () => {
                 lint: true,
                 mode: "",
                 lineNumbers: true,
-                theme: "monokai",
+                theme: state.theme,
             }}
         />
     );
