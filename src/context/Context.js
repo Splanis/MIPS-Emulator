@@ -4,7 +4,7 @@ import { reducer } from "./reducer";
 export const Context = createContext({});
 
 const initialState = {
-    editor: { currentFile: 0, files: [{ content: "", fileName: "Untitled.asm" }] },
+    editor: { currentFile: 0, files: [{ content: "", fileName: "Untitled.asm", id: 0 }] },
     editorSettings: { fontSize: 16, theme: "monokai" },
     sidebar: { numeralSystem: 16, visible: true },
 };
