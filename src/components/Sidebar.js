@@ -24,25 +24,25 @@ const Sidebar = () => {
 
     return (
         <StyledSidebar visible={state.sidebar.visible}>
-            <FlexDiv>Name</FlexDiv>
-            <FlexDiv>Number</FlexDiv>
-            <FlexDiv>
+            <Cell>Name</Cell>
+            <Cell>Number</Cell>
+            <Cell>
                 <span style={{ cursor: "pointer" }} onClick={handleNumeraSystem}>
                     Value({numeralSystemToString[numeralSystem]})
                 </span>
-            </FlexDiv>
+            </Cell>
             {registers.map((register, index) => (
                 <>
-                    <FlexDiv index={index} isCell={true}>
+                    <Cell index={index} isCell={true}>
                         {register.name}
-                    </FlexDiv>
-                    <FlexDiv index={index} isCell={true}>
+                    </Cell>
+                    <Cell index={index} isCell={true}>
                         {index}
-                    </FlexDiv>
-                    <FlexDiv index={index} isCell={true}>
+                    </Cell>
+                    <Cell index={index} isCell={true}>
                         {prefix[numeralSystem]}
                         {register.value.toString(numeralSystem)}
-                    </FlexDiv>
+                    </Cell>
                 </>
             ))}
         </StyledSidebar>
@@ -56,7 +56,7 @@ const StyledSidebar = styled.div`
     flex: 2;
 `;
 
-const FlexDiv = styled.div`
+const Cell = styled.div`
     flex: 1;
     display: flex;
     justify-content: center;
