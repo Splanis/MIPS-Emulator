@@ -1,18 +1,47 @@
 import React, { useContext, useState } from "react";
 
+import styled from "styled-components";
+
 import { Context } from "../context/Context";
 import * as actions from "../context/actionTypes";
-import { StyledButton } from "../components/shared/Button";
-import styled from "styled-components";
+
+import { themes, fontSizes } from "../utils/editorSettings";
+
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import OpenInNewIcon from "@material-ui/icons/OpenInNew";
+import CloseIcon from "@material-ui/icons/Close";
+import SkipNextTwoToneIcon from "@material-ui/icons/SkipNextTwoTone";
+import FolderOpenTwoToneIcon from "@material-ui/icons/FolderOpenTwoTone";
 
 const Navigation = () => {
     const [state, dispatch] = useContext(Context);
-    const [downloading, setDownloading] = useState(false);
     const [fileName, setFileName] = useState("");
-    const [filesDropDown, setFilesDropDown] = useState(false);
+    const [anchorElMenu, setAnchorElMenu] = useState(null);
+    const [anchorElFontSize, setAnchorElFontSize] = useState(null);
+    const [anchorElTheme, setAnchorElTheme] = useState(null);
 
-    const nameFile = () => {
-        setDownloading(true);
+    const handleThemeChange = (theme) => {
+        dispatch({ type: actions.CHANGE_THEME, payload: theme });
+    };
+
+    const handleFontSizeChange = (fontSize) => {
+        dispatch({ type: actions.CHANGE_FONT_SIZE, payload: fontSize });
+    };
+
+    const handleClick = (event) => {
+        setAnchorElMenu(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorElMenu(null);
+    };
+
+    const newFile = () => {
+        dispatch({ type: actions.NEW_FILE });
     };
 
     const openFile = async (e) => {
@@ -23,11 +52,11 @@ const Navigation = () => {
             const text = e.target.result;
             dispatch({
                 type: actions.OPEN_FILE,
-                payload: { editor: text, fileName: e.target.fileName },
+                payload: { content: text, fileName: e.target.fileName },
             });
+            console.log(e.target.fileName);
         };
         reader.readAsText(e.target.files[0]);
-        setFilesDropDown(false);
     };
 
     const downloadFile = () => {
@@ -37,15 +66,12 @@ const Navigation = () => {
             atag.href = URL.createObjectURL(file);
             atag.download = fileName;
             atag.click();
-            setDownloading(false);
             setFileName("");
         }
-        setFilesDropDown(false);
     };
 
     const closeFile = () => {
-        dispatch({ type: actions.CLOSE_FILE });
-        setFilesDropDown(false);
+        dispatch({ type: actions.CLOSE_FILE, payload: state.editor.currentFile });
     };
 
     const toggleSidebar = () => {
@@ -54,64 +80,143 @@ const Navigation = () => {
 
     return (
         <StyledNavigation>
-            <Dropdown>
-                <DropDownButton onClick={() => setFilesDropDown((prev) => !prev)}>
-                    Files
-                </DropDownButton>
-                <DropwDownContent filesDropDown={filesDropDown}>
-                    <DropdownItems>
-                        <input
-                            style={{ display: "none" }}
-                            id="upload-file"
-                            type="file"
-                            onChange={(e) => {
-                                openFile(e);
-                                setFileName(e.target.files[0].name);
-                            }}
-                            accept="text/plain"
-                        />
-                        <StyledLabel htmlFor="upload-file">Open</StyledLabel>
-                    </DropdownItems>
-                    <DropdownItems>
-                        <StyledButton
-                            disabled={state.openFile || fileName ? false : true}
-                            onClick={downloadFile}
-                        >
-                            Save
-                        </StyledButton>
-                    </DropdownItems>
-                    <DropdownItems>
-                        {downloading ? (
-                            <>
-                                <StyledInput
-                                    placeholder="filename"
-                                    value={fileName}
-                                    onChange={(e) => setFileName(e.target.value)}
-                                />
-                                <DownloadButton onClick={downloadFile}>+</DownloadButton>
-                            </>
-                        ) : (
-                            <StyledButton onClick={nameFile}>Save As</StyledButton>
-                        )}
-                    </DropdownItems>
-                    <DropdownItems>
-                        <StyledButton
-                            disabled={state.openFile || fileName ? false : true}
-                            onClick={closeFile}
-                        >
-                            Close
-                        </StyledButton>
-                    </DropdownItems>
-                </DropwDownContent>
-            </Dropdown>
+            <Button
+                aria-controls="menu-files"
+                variant="outlined"
+                aria-haspopup="true"
+                onClick={handleClick}
+                endIcon={<FolderOpenTwoToneIcon />}
+            >
+                Files
+            </Button>
 
-            <StyledButton>Run</StyledButton>
+            <Menu
+                id="menu-files"
+                anchorEl={anchorElMenu}
+                keepMounted
+                open={Boolean(anchorElMenu)}
+                onClose={handleClose}
+            >
+                <MenuItem
+                    onClick={() => {
+                        handleClose();
+                        newFile();
+                    }}
+                >
+                    New
+                </MenuItem>
+                <MenuItem
+                    onClick={(e) => {
+                        handleClose();
+                    }}
+                >
+                    <input
+                        style={{ display: "none" }}
+                        id="upload-file"
+                        type="file"
+                        onChange={(e) => {
+                            openFile(e);
+                            setFileName(e.target.files[0].name);
+                        }}
+                        accept="text/plain"
+                    />
+                    <label htmlFor="upload-file">Open</label>
+                </MenuItem>
+                <MenuItem
+                    onClick={() => {
+                        handleClose();
+                        downloadFile();
+                    }}
+                >
+                    Save
+                </MenuItem>
+                <MenuItem
+                    onClick={() => {
+                        handleClose();
+                        closeFile();
+                    }}
+                >
+                    Close
+                </MenuItem>
+            </Menu>
 
-            <StyledButton>Step Forward</StyledButton>
+            <Button
+                aria-controls="menu-run"
+                variant="outlined"
+                aria-haspopup="true"
+                endIcon={<PlayArrowIcon />}
+            >
+                Run
+            </Button>
+            <Button
+                aria-controls="menu-step"
+                variant="outlined"
+                aria-haspopup="true"
+                endIcon={<SkipNextTwoToneIcon />}
+            >
+                Step
+            </Button>
 
-            <StyledButton onClick={toggleSidebar} style={{ marginLeft: "auto", width: 32 }}>
-                {state.sidebar.visible ? "X" : "^"}
-            </StyledButton>
+            <Button
+                aria-controls="menu-font"
+                variant="outlined"
+                aria-haspopup="true"
+                onClick={(e) => setAnchorElFontSize(e.currentTarget)}
+            >
+                Font Size:{state.editorSettings.fontSize}
+            </Button>
+            <Menu
+                id="menu-font"
+                anchorEl={anchorElFontSize}
+                keepMounted
+                open={Boolean(anchorElFontSize)}
+                onClose={() => setAnchorElFontSize(null)}
+            >
+                {fontSizes.map((fontSize) => (
+                    <MenuItem
+                        key={fontSize}
+                        onClick={() => {
+                            setAnchorElFontSize(null);
+                            handleFontSizeChange(fontSize);
+                        }}
+                    >
+                        {fontSize}
+                    </MenuItem>
+                ))}
+            </Menu>
+
+            <Button
+                aria-controls="menu-theme"
+                variant="outlined"
+                aria-haspopup="true"
+                onClick={(e) => setAnchorElTheme(e.currentTarget)}
+            >
+                Theme: {state.editorSettings.theme}
+            </Button>
+
+            <Menu
+                id="menu-theme"
+                anchorEl={anchorElTheme}
+                keepMounted
+                open={Boolean(anchorElTheme)}
+                onClose={() => setAnchorElTheme(null)}
+            >
+                {themes.map((theme) => (
+                    <MenuItem
+                        key={theme}
+                        onClick={() => {
+                            setAnchorElTheme(null);
+                            handleThemeChange(theme);
+                        }}
+                    >
+                        {theme}
+                    </MenuItem>
+                ))}
+            </Menu>
+
+            <IconButton aria-label="toggle" style={{ marginLeft: "auto" }} onClick={toggleSidebar}>
+                {state.sidebar.visible ? <CloseIcon /> : <OpenInNewIcon />}
+            </IconButton>
         </StyledNavigation>
     );
 };
@@ -123,71 +228,9 @@ const StyledNavigation = styled.div`
     display: flex;
     align-items: center;
     padding: 1rem;
-`;
 
-const StyledLabel = styled.label`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #c0c0c0;
-    color: black;
-    padding: 10px 5px;
-    border: none;
-    width: 120px;
-    height: 35px;
-    margin: 5px;
-    font-size: 1rem;
-
-    &:hover {
-        cursor: pointer;
-    }
-`;
-
-const StyledInput = styled.input`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #c0c0c0;
-    color: black;
-    padding: 10px 5px;
-    border: none;
-    width: 120px;
-    height: 35px;
-    margin: 5px;
-    font-size: 1rem;
-    position: relative;
-`;
-
-const DownloadButton = styled.button`
-    position: absolute;
-`;
-
-const Dropdown = styled.div`
-    margin: 5px;
-`;
-
-const DropwDownContent = styled.div`
-    display: ${(props) => (props.filesDropDown ? "flex" : "none")};
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 140px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 10;
-    flex-direction: column;
-`;
-
-const DropDownButton = styled(StyledButton)`
-    margin: 0;
-`;
-
-const DropdownItems = styled.div`
-    text-decoration: none;
-    background: #c0c0c0;
-    border: none;
-    font-size: 1rem;
-
-    &:hover {
-        cursor: pointer;
+    button {
+        margin: 0 5px;
     }
 `;
 
