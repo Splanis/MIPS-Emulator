@@ -96,6 +96,14 @@ export const registers = [
         value: 0,
     },
     {
+        name: "$t8",
+        value: 0,
+    },
+    {
+        name: "$t9",
+        value: 0,
+    },
+    {
         name: "$k0",
         value: 0,
     },

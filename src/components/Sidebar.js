@@ -37,7 +37,7 @@ const Sidebar = () => {
                         {register.name}
                     </Cell>
                     <Cell index={index} isCell={true}>
-                        {index}
+                        {index > 31 ? "" : index}
                     </Cell>
                     <Cell index={index} isCell={true}>
                         {prefix[numeralSystem]}
