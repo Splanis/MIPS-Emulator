@@ -6,7 +6,7 @@ import "codemirror/theme/material.css";
 import styled from "styled-components";
 import { Context } from "../context/Context";
 import * as actions from "../context/actionTypes";
-import EditorSettings from "./EditorSettings";
+import Files from "./Files";
 
 const Editor = () => {
     const [state, dispatch] = useContext(Context);
@@ -23,7 +23,7 @@ const Editor = () => {
 
     return (
         <StyledEditor>
-            <EditorSettings />
+            <Files />
             <StyledControlledEditor
                 fontSize={fontSize + "px"}
                 onBeforeChange={handleEditorChange}
