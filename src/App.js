@@ -1,10 +1,11 @@
 import React from "react";
+
+import styled from "styled-components";
+
 import Navigation from "./components/Navigation";
 import Terminal from "./components/Terminal";
 import Editor from "./components/Editor";
 import Sidebar from "./components/Sidebar";
-
-import styled from "styled-components";
 
 function App() {
     return (
