@@ -1,3 +1,4 @@
+import { FileCopySharp } from "@material-ui/icons";
 import * as actions from "./actionTypes";
 
 export const reducer = (state, { type, payload }) => {
@@ -5,7 +6,19 @@ export const reducer = (state, { type, payload }) => {
         case actions.OPEN_FILE:
             return { ...state, editor: payload.editor, openFile: payload.fileName };
         case actions.SET_EDITOR:
-            return { ...state, editor: payload };
+            const { content, currentFile } = payload;
+
+            return {
+                ...state,
+                editor: {
+                    ...state.editor,
+                    files: state.editor.files.map((file, index) => {
+                        if (index === currentFile) {
+                            return { ...file, content };
+                        } else return file;
+                    }),
+                },
+            };
         case actions.CLOSE_FILE:
             return { ...state, editor: "", openFile: null };
         case actions.CHANGE_THEME:

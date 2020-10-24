@@ -11,23 +11,29 @@ import EditorSettings from "./EditorSettings";
 const Editor = () => {
     const [state, dispatch] = useContext(Context);
 
+    const { files, currentFile } = state.editor;
+    const { theme, fontSize } = state.editorSettings;
+
     const handleEditorChange = (editor, data, value) => {
-        dispatch({ type: actions.SET_EDITOR, payload: value });
+        dispatch({
+            type: actions.SET_EDITOR,
+            payload: { content: value, currentFile },
+        });
     };
 
     return (
         <StyledEditor>
             <EditorSettings />
             <StyledControlledEditor
-                fontSize={state.editorSettings.fontSize + "px"}
+                fontSize={fontSize + "px"}
                 onBeforeChange={handleEditorChange}
-                value={state.editor}
+                value={files[currentFile].content}
                 options={{
                     lineWrapping: true,
                     lint: true,
                     mode: "",
                     lineNumbers: true,
-                    theme: state.editorSettings.theme,
+                    theme: theme,
                 }}
             />
         </StyledEditor>
