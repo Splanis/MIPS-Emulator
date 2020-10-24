@@ -228,6 +228,7 @@ const StyledNavigation = styled.div`
     display: flex;
     align-items: center;
     padding: 1rem;
+    z-index: 10;
 
     button {
         margin: 0 5px;
