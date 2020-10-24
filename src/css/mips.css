@@ -1,0 +1,12 @@
+.cm-label {
+    color: lightgray;
+    font-style: italic;
+}
+
+.cm-register {
+    color: rgb(196, 196, 56);
+}
+
+.cm-declaration {
+    color: lightgreen;
+}
