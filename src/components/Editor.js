@@ -7,6 +7,11 @@ import styled from "styled-components";
 import { Context } from "../context/Context";
 import * as actions from "../context/actionTypes";
 import EditorSettings from "./EditorSettings";
+import CodeMirror from "codemirror";
+import mips from "../utils/mips"
+import "../css/mips.css";
+
+CodeMirror.defineMode("mips", mips);
 
 const Editor = () => {
     const [state, dispatch] = useContext(Context);
@@ -25,7 +30,7 @@ const Editor = () => {
                 options={{
                     lineWrapping: true,
                     lint: true,
-                    mode: "",
+                    mode: "mips",
                     lineNumbers: true,
                     theme: state.editorSettings.theme,
                 }}
