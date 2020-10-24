@@ -31,12 +31,12 @@ const Files = () => {
                     <Tab
                         key={index}
                         label={
-                            <div style={{ display: "flex" }}>
+                            <div style={{ display: "flex", alignItems: "center" }}>
                                 {file.fileName}
                                 <CloseIcon
                                     fontSize="small"
-                                    // style={{ paddingBottom: 5 }}
                                     onClick={handleCloseFile}
+                                    style={{ marginLeft: 5 }}
                                 />
                             </div>
                         }
