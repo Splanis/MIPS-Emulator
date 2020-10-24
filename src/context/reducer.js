@@ -1,26 +1,70 @@
-import { FileCopySharp } from "@material-ui/icons";
 import * as actions from "./actionTypes";
+import { calculateFileName } from "../utils/functions";
 
 export const reducer = (state, { type, payload }) => {
     switch (type) {
-        case actions.OPEN_FILE:
-            return { ...state, editor: payload.editor, openFile: payload.fileName };
+        // handle editor
         case actions.SET_EDITOR:
-            const { content, currentFile } = payload;
-
             return {
                 ...state,
                 editor: {
                     ...state.editor,
                     files: state.editor.files.map((file, index) => {
-                        if (index === currentFile) {
-                            return { ...file, content };
+                        if (index === payload.currentFile) {
+                            return { ...file, content: payload.content };
                         } else return file;
                     }),
                 },
             };
+        // handle files
+        case actions.OPEN_FILE:
+            return {
+                ...state,
+                editor: {
+                    ...state.editor,
+                    currentFile: state.editor.files.length - 1,
+                    files: [
+                        ...state.editor.files,
+                        {
+                            content: payload.content,
+                            fileName: payload.fileName,
+                        },
+                    ],
+                },
+            };
         case actions.CLOSE_FILE:
-            return { ...state, editor: "", openFile: null };
+            console.log(payload);
+            console.log(state);
+            return {
+                ...state,
+                editor: {
+                    currentFile: state.editor.currentFile - 1,
+                    files: state.editor.files.filter((file) => file.id !== payload),
+                },
+            };
+        case actions.NEW_FILE:
+            const { files } = state.editor;
+
+            return {
+                ...state,
+                editor: {
+                    currentFile: state.editor.files.length,
+                    files: [
+                        ...state.editor.files,
+                        {
+                            id: state.editor.files.length,
+                            content: "",
+                            fileName: calculateFileName(files, "Untitled.asm"),
+                        },
+                    ],
+                },
+            };
+        case actions.CHANGE_FILE:
+            return {
+                ...state,
+                editor: { ...state.editor, currentFile: payload },
+            };
+        // handle editor settings
         case actions.CHANGE_THEME:
             return { ...state, editorSettings: { ...state.editorSettings, theme: payload } };
         case actions.CHANGE_FONT_SIZE:
@@ -31,6 +75,7 @@ export const reducer = (state, { type, payload }) => {
                     fontSize: payload,
                 },
             };
+        // handle sidebar
         case actions.CHANGE_NUMERAL_SYSTEM:
             return {
                 ...state,
