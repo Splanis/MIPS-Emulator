@@ -19,7 +19,6 @@ import FolderOpenTwoToneIcon from "@material-ui/icons/FolderOpenTwoTone";
 
 const Navigation = () => {
     const [state, dispatch] = useContext(Context);
-    const [fileName, setFileName] = useState("");
     const [anchorElMenu, setAnchorElMenu] = useState(null);
     const [anchorElFontSize, setAnchorElFontSize] = useState(null);
     const [anchorElTheme, setAnchorElTheme] = useState(null);
@@ -60,14 +59,13 @@ const Navigation = () => {
     };
 
     const downloadFile = () => {
-        if (state.openFile || fileName) {
-            let file = new Blob([state.editor], { type: "text/plain;charset=utf-8" });
-            let atag = document.createElement("a");
-            atag.href = URL.createObjectURL(file);
-            atag.download = fileName;
-            atag.click();
-            setFileName("");
-        }
+        let file = new Blob([state.editor.files[state.editor.currentFile].content], {
+            type: "text/plain;charset=utf-8",
+        });
+        let atag = document.createElement("a");
+        atag.href = URL.createObjectURL(file);
+        atag.download = state.editor.files[state.editor.currentFile].fileName;
+        atag.click();
     };
 
     const closeFile = () => {
@@ -116,7 +114,6 @@ const Navigation = () => {
                         type="file"
                         onChange={(e) => {
                             openFile(e);
-                            setFileName(e.target.files[0].name);
                         }}
                         accept="text/plain"
                     />
@@ -128,7 +125,7 @@ const Navigation = () => {
                         downloadFile();
                     }}
                 >
-                    Save
+                    Download
                 </MenuItem>
                 <MenuItem
                     onClick={() => {
