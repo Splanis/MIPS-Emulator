@@ -5,3 +5,5 @@ export const CLOSE_FILE = 3;
 export const CHANGE_FONT_SIZE = 4;
 export const CHANGE_NUMERAL_SYSTEM = 5;
 export const TOGGLE_SIDE_BAR = 6;
+export const NEW_FILE = 7;
+export const CHANGE_FILE = 8;
