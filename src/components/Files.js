@@ -30,7 +30,16 @@ const Files = () => {
                 {files.map((file, index) => (
                     <Tab
                         key={index}
-                        label={file.fileName}
+                        label={
+                            <div style={{ display: "flex" }}>
+                                {file.fileName}
+                                <CloseIcon
+                                    fontSize="small"
+                                    // style={{ paddingBottom: 5 }}
+                                    onClick={handleCloseFile}
+                                />
+                            </div>
+                        }
                         onClick={() => dispatch({ type: actions.CHANGE_FILE, payload: index })}
                         style={{ textTransform: "none" }}
                     />
