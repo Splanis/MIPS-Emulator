@@ -10,6 +10,9 @@ import EditorSettings from "./EditorSettings";
 import CodeMirror from "codemirror";
 import mips from "../utils/mips"
 import "../css/mips.css";
+import "codemirror/addon/hint/show-hint.js";
+import "codemirror/addon/hint/show-hint.css";
+import mipsHint from "../utils/mips-hints.js";
 
 CodeMirror.defineMode("mips", mips);
 
@@ -33,6 +36,9 @@ const Editor = () => {
                     mode: "mips",
                     lineNumbers: true,
                     theme: state.editorSettings.theme,
+                    showHint: true,
+                    hintOptions: { hint: mipsHint, completeOnSingleClick: true },
+                    extraKeys: {"Ctrl-Space": "autocomplete"}
                 }}
             />
         </StyledEditor>
