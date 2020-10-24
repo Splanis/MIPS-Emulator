@@ -1,6 +1,6 @@
 import React from "react";
 import { createMuiTheme, makeStyles, ThemeProvider } from "@material-ui/core/styles";
-import { orange, green } from "@material-ui/core/colors";
+import { orange, grey } from "@material-ui/core/colors";
 
 export const theme = createMuiTheme({
     status: {
@@ -8,5 +8,7 @@ export const theme = createMuiTheme({
     },
     palette: {
         type: "dark",
+        primary: grey,
+        secondary: orange,
     },
 });
