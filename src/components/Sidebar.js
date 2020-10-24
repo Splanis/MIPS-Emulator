@@ -32,7 +32,7 @@ const Sidebar = () => {
                 </span>
             </Cell>
             {registers.map((register, index) => (
-                <>
+                <React.Fragment key={index}>
                     <Cell index={index} isCell={true}>
                         {register.name}
                     </Cell>
@@ -43,7 +43,7 @@ const Sidebar = () => {
                         {prefix[numeralSystem]}
                         {register.value.toString(numeralSystem)}
                     </Cell>
-                </>
+                </React.Fragment>
             ))}
         </StyledSidebar>
     );
@@ -62,7 +62,7 @@ const Cell = styled.div`
     justify-content: center;
     align-items: center;
     border: ${(props) => (props.isCell ? "1px solid black" : "")};
-    font-size: ${(props) => (props.isCell ? "16px" : "20px")};
+    font-size: ${(props) => (props.isCell ? "13px" : "20px")};
     background: ${(props) => (props.index % 2 === 0 ? "#565656" : "#3a3a3a")};
     border-bottom: ${(props) => (props.isCell === false ? "1px solid black" : "")};
 `;
