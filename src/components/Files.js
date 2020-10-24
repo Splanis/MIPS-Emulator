@@ -6,31 +6,40 @@ import * as actions from "../context/actionTypes";
 
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import Button from "@material-ui/core/Button";
+import { IconButton } from "@material-ui/core";
+import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
+import CloseIcon from "@material-ui/icons/Close";
 
 const Files = () => {
     const [state, dispatch] = useContext(Context);
-    const [value, setValue] = useState(0);
 
     const { currentFile, files } = state.editor;
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const handleNewFile = () => {
+        dispatch({ type: actions.NEW_FILE });
+    };
+
+    const handleCloseFile = () => {
+        dispatch({ type: actions.CLOSE_FILE, payload: currentFile });
     };
 
     return (
         <StyledFiles>
-            {files[currentFile].fileName}
-            <Tabs
-                value={value}
-                onChange={handleChange}
-                textColor="secondary"
-                variant="fullWidth"
-                aria-label="full width tabs example"
-            >
-                <Tab label="Item One" />
-                <Tab label="Item Two" />
-                <Tab label="Item Three" />
+            <Tabs value={currentFile} aria-label="file tabs" textColor="secondary">
+                {files.map((file, index) => (
+                    <Tab
+                        key={index}
+                        label={file.fileName}
+                        onClick={() => dispatch({ type: actions.CHANGE_FILE, payload: index })}
+                        style={{ textTransform: "none" }}
+                    />
+                ))}
             </Tabs>
+
+            <IconButton color="primary" onClick={handleNewFile}>
+                <AddCircleOutlineOutlinedIcon />
+            </IconButton>
         </StyledFiles>
     );
 };
